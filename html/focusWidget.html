@@ -1,0 +1,13 @@
+<!-- To be inserted (copy/paste into acp's web authoring interface) -->
+
+<html>
+
+</html>
+
+<script>
+    function getFocusVal() {
+        var aNum = 3;
+        DC3.Ajax.sendRequest("GET", "/ac/manualFocus.asp", true);
+        }
+    setInterval(getFocusVal, 1000)
+</script>

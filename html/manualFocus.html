@@ -1,0 +1,135 @@
+--------------Link on Main Menu under Observatory Info-----------------
+    <div class="subItem"><a href="javascript:;" title="Bypass Status" onClick="story.displayTiddler(this,'BypassStatus',null,config.options.chkAnimate,false)">Bypass Status</a></div>
+
+----------------------- tiddler code (copy paste via autoring in tiddler) -----------------------
+<html>
+<div><span id="setfocuserror"> </span></div>
+<div><span id="getstatuserror"> </span></div>
+<div>
+Current Focus Position: <span id="pos"> </span>
+<br>
+Is Busy: <span id="busy"> </span>
+</div>
+<br>
+<br>
+<table>
+<tr>
+<td>Set Focus Value:</td>
+            <td><input type="text" name="absoluteFocusValue" id="absoluteFocusValue" size="12" value="">
+                <td><input class="moveButton" type="button" name="sendAbsMove" id="sendAbsMove"></td>
+</tr>
+<tr>
+<td>Apply Offset:</td>
+            <td><input type="text" name="offsetFocusValue" id="offsetFocusValue" size="12" value="">
+            <td><input class="moveButton" type="button" name="sendOffsetMove" id="sendOffsetMove"></td>
+</tr>
+<tr>
+    <td colspan="3"><p align="center"><input style="background-color:red" type="button" name="stopMove" id="stopMove" value="STOP"></p></td>
+</tr>
+</table>
+</html>
+
+<script>
+var statusInterval = 500 // milliseconds
+var statusTimer = null;
+var busyButtonColor = "background-color:yellow";
+var busyButtonText = "BUSY";
+var readyButtonColor = "background-color:lightgreen";
+var readyButtonText = "MOVE";
+
+function sendAbsMove(){
+    // get the value in the abs move field:
+    var absMoveVal = $("#absoluteFocusValue").val();
+    console.log("abs" + absMoveVal);
+    DC3.Ajax.sendRequest("GET", "/ac/setFocus.asp?absMove="+parseInt(absMoveVal),
+                            "", setFocusCallback, null);
+}
+
+function sendOffsetMove(){
+    // get the value in the offset move field:
+    var offsetMoveVal = $("#offsetFocusValue").val();
+    console.log("offset " + offsetMoveVal);
+    DC3.Ajax.sendRequest("GET", "/ac/setFocus.asp?offsetMove="+parseInt(offsetMoveVal),
+                            "", setFocusCallback, null);
+}
+
+function stopMove(){
+    console.log("stop move");
+    DC3.Ajax.sendRequest("GET", "/ac/setFocus.asp?stop",
+                            "", setFocusCallback, null);
+}
+
+function setButtons(isBusy){
+    // set the button colors, text
+    // and disable if busy
+    if (!isBusy){
+        var buttonColor = readyButtonColor;
+        var buttonText = readyButtonText;
+        $(".moveButton").removeAttr("disabled")
+    }
+    else{
+        var buttonColor = busyButtonColor;
+        var buttonText = busyButtonText;
+        $(".moveButton").attr("disabled", "true")
+    }
+    // jquery select buttons
+    $(".moveButton").attr({
+        "style": buttonColor,
+        "value": buttonText,
+    })
+}
+
+function setFocusCallback(json){
+    var json = String(json);
+    if (json.search("Error")>0){
+        $("#setfocuserror").html("ERROR Setting or Stopping Focus: " + json);
+    }
+    else{
+        // no error!
+        $("#setfocuserror").html("");
+        console.log("setFocus callback: " + json);
+    }
+}
+
+
+function statusCallback(json){
+    // triggered when a status returns
+    var json = String(json);
+    if (json.search("Error")>0){
+        $("#getstatuserror").html("ERROR Getting Status: " + json);
+    }
+    else{
+        // no error!
+        $("#getstatuserror").html("");
+        var splitLine = json.split(",");
+        var absPos = splitLine[0];
+        var isBusy = splitLine[1]=="true";
+        setButtons(isBusy);
+        $("#pos").html(absPos);
+        $("#busy").html(String(isBusy));
+    }
+    if(statusTimer == null){
+        // run status again in statusInterval amount of time
+        statusTimer = setTimeout(getStatus, statusInterval);
+    }
+}
+
+function getStatus(){  //takeout init arg?
+    // send a request for status to the server
+    if(statusTimer){                    // Allow pre-emptive refresh call
+        clearTimeout(statusTimer);     // ...for immediate refresh
+    }
+    statusTimer = null;
+    DC3.Ajax.sendRequest("GET", "/ac/getFocusStatus.asp",
+                            "", statusCallback, null);
+}
+
+// add click functions to buttons
+// for some reason onclick must added in the JS for it to work on this system (not the html)
+$("#sendAbsMove").click(sendAbsMove);
+$("#sendOffsetMove").click(sendOffsetMove);
+$("#stopMove").click(stopMove);
+
+getStatus(); // status runs continuously on a timer.
+
+</script>

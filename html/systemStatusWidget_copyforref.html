@@ -1,0 +1,614 @@
+<<slider "" "System Status Help" Help>><html>&nbsp;&nbsp;&nbsp;&nbsp;<span id="sm_HoverLabel">Hover the mouse over the links to see what they do</span>
+<!-- Main Display -->
+<table id="sm_sysMon" class="noBorder" style="border:0">
+    <tr height="100%">
+        <td valign="top">
+            <table style="margin:0">
+                <tr>
+                    <th colspan="2" scope="col">Observatory</th>
+                </tr>
+                <tr>
+                    <td colspan="2" class="telemetry" id="sm_obsStat"><span>n/a</span></td>
+                </tr>
+                <tr>
+                    <td class="telemlabel">Local:</td>
+                    <td id="sm_local" class="telemetry"><span>--:--:--</span></td>
+                </tr>
+                <tr>
+                    <td class="telemlabel">UTC:</td>
+                    <td id="sm_utc" class="telemetry"><span>--:--:--</span></td>
+                </tr>
+                <tr>
+                    <td class="telemlabel">LST:</td>
+                    <td id="sm_lst" class="telemetry"><span>--:--:--</span></td>
+                </tr>
+                <tr>
+                    <td class="telemlabel" id="sm_obsOwnerLabel"><span>Owner</span></td>
+                    <td class="telemetry" id="sm_obsOwner"><span>n/a</span></td>
+                </tr>
+                <tr>
+                    <td class="telemlabel" id="sm_obsWeatherLabel"><span>Weather</span></td>
+                    <td class="telemetry" id="sm_obsWeather"><span>n/a</span></td>
+                </tr>
+                <tr id="sm_obsShutterRow">
+                    <td class="telemlabel" id="sm_obsShutterLabel"><span>Shutter</span></td>
+                    <td class="telemetry" id="sm_obsShutter"><span>n/a</span></td>
+                </tr>
+                <tr id="sm_obsDomeRow">
+                    <td class="telemlabel" id="sm_obsDomeLabel"><span>Dome</span></td>
+                    <td class="telemetry" id="sm_obsDome"><span>n/a</span></td>
+                </tr>
+            </table>
+        </td>
+        <td valign="top">
+            <table style="margin:0">
+                <tr>
+                    <th width="110" colspan="2" id="sm_scopeHdr"><span>Telescope</span></th>
+                </tr>
+                <tr>
+                    <td id="sm_scopeStat" class="telemetry" colspan="2"><span>n/a</span></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><div class="progBarBg"><div id="sm_slewProg" class="progBarFg"></div></div></td>
+                </tr>
+                <tr title="<% if(Prefs.DoLocalTopo) { %>Local Topocentric<% } else { %>J2000<% } %>">
+                    <td class="telemlabel">RA:</td>
+                    <td id="sm_ra" class="telemetry"><span>--:--:--.--</span></td>
+                </tr>
+                <tr title="<% if(Prefs.DoLocalTopo) { %>Local Topocentric<% } else { %>J2000<% } %>">
+                    <td class="telemlabel">Dec:</td>
+                    <td id="sm_dec" class="telemetry"><span>---°--'--.-"</span></td>
+                </tr>
+                <tr id="sm_paRow" title="True sky PA">
+                    <td class="telemlabel">PA:</td>
+                    <td id="sm_pa" class="telemetry"><span>---°</span></td>
+                </tr>
+                <tr>
+                    <td class="telemlabel">Az:</td>
+                    <td id="sm_az" class="telemetry"><span>---.-°</span></td>
+                </tr>
+                <tr>
+                    <td class="telemlabel">Alt:</td>
+                    <td id="sm_alt" class="telemetry"><span>--.-°</span></td>
+                </tr>
+                <tr id="sm_gemRow" title="Direction looking, opposite of pier side">
+                    <td class="telemlabel">GEM:</td>
+                    <td id="sm_gem" class="telemetry"><span>n/a</span></td>
+                </tr>
+                <tr title="Relative air mass">
+                    <td class="telemlabel">Air:</td>
+                    <td id="sm_air" class="telemetry"><span>--.-</span></td>
+                </tr>
+                <tr title="Secondary Focus Position">
+                    <td class="telemlabel">Focus:</td>
+                    <td id="sm_focus" class="telemetry"><span>-----</span></td>
+                </tr>
+            </table>
+        </td>
+        <td valign="top">
+            <table style="margin:0">
+                <tr>
+                    <th width="124" colspan="3" id="sm_camHdr"><span>Imager</span></th>
+                </tr>
+                <tr>
+                    <td colspan="3" id="sm_camStat" class="telemetry"><span>n/a</span></td>
+                </tr>
+                <tr>
+                    <td colspan="3"><div class="progBarBg"><div id="sm_expProg" class="progBarFg"></div></div></td>
+                </tr>
+                <tr id="sm_imgFiltRow">
+                    <td width="46" class="telemlabel">Filter</td>
+                    <td colspan="2" id="sm_imgFilt" class="telemetry"><span>n/a</span></td>
+                </tr>
+                <tr>
+                    <td width="46" class="telemlabel">Binning&nbsp;</td>
+                    <td colspan="2" id="sm_imgBin" class="telemetry"><span>-:1</span></td>
+                </tr>
+                <tr id="sm_imgTempRow">
+                    <td width="46" class="telemlabel" id="sm_imgTempLabel"><span>Cooler</span></td>
+                    <td colspan="2" id="sm_imgTemp" class="telemetry"><span>---</span></td>
+                </tr>
+                <tr id="sm_imgGuiderRow1">
+                    <th colspan="3">Guider</th>
+                </tr>
+                <tr id="sm_imgGuiderRow2">
+                    <td colspan="3" id="sm_guideStat" class="telemetry"><span>n/a</span></td>
+                </tr>
+                <tr id="sm_imgGuiderRow3">
+                    <td colspan="2" class="telemlabel">Interval (sec)</td>
+                    <td class="telemetry" id="sm_guideInt" style="text-align:right; width: 3em;"><span>--.--</span></td>
+                </tr>
+                <tr id="sm_imgGuiderRow4" >
+                    <td class="telemlabel">Error</td>
+                    <td class="telemlabel">Ex:</td>
+                    <td class="telemetry" id="sm_guideX" style="text-align:right; width: 3em;"><span>--.--</span></td>
+                </tr>
+                <tr id="sm_imgGuiderRow5">
+                    <td class="telemlabel">&nbsp;(pix)</td>
+                    <td class="telemlabel">Ey:</td>
+                    <td class="telemetry" id="sm_guideY" style="text-align:right; width: 3em;"><span>--.--</span></td>
+                </tr>
+            </table>
+        </td>
+        <td valign="top">
+            <table style="margin:0">
+                <tr>
+                    <th width="128"colspan="2">Activity</th>
+                </tr>
+                <tr>
+                    <td colspan="2" class="telemetry" id="sm_actStat"><span>n/a</span></td>
+                </tr>
+                <tr title="FWHM of last image">
+                    <td width="44" class="telemlabel">FWHM</td>
+                    <td class="telemetry" id="sm_lastFWHM"><span>-.-</span></td>
+                </tr>
+                <tr>
+                    <td colspan="2" height="128" id="sm_thumb" align="center" valign="middle" title="Last image preview
+Click to see a larger preview"></td>
+                </tr>
+                <tr>
+                    <td colspan="2" height="60" id="sm_guideImg" align="center" valign="middle" title="Guider trackbox at startup
+(magnified 1.5 times)
+Click for full guider image."></td>
+                </tr>
+            </table>
+        </td>
+        <td valign="top">
+            <table style="margin:0">
+                <tr>
+                    <th width="158" colspan="2" id="sm_plnTitle">Plan</th>
+                </tr>
+                <tr>
+                    <td width="44" class="telemlabel" id="sm_plnSetLabel">Set</td>
+                    <td width="100" class="telemetry" id="sm_plnSet"><span>-/-</span></td>
+                </tr>
+                <tr>
+                    <td width="44" class="telemlabel" id="sm_plnTgtLabel">Target</td>
+                    <td width="108" class="telemetry" id="sm_plnTgt"><span>n/a (-/-)</span></td>
+                </tr>
+                <tr>
+                    <td width="44" class="telemlabel">Repeat</td>
+                    <td width="108" class="telemetry" id="sm_plnRpt"><span>-/-</span></td>
+                </tr>
+                <tr id="sm_plnFiltRow">
+                    <td width="44" class="telemlabel" id="sm_plnFiltLabel">Filter</td>
+                    <td width="108" class="telemetry" id="sm_plnFilt"><span>n/a (-/-)</span></td>
+                </tr>
+                <tr>
+                    <td width="44" class="telemlabel">Count</td>
+                    <td width="108" class="telemetry" id="sm_plnCnt"><span>-/-</span></td>
+                </tr>
+            </table>
+            <table id="sm_imgGraphArea" style="margin:0" title="+/- 2 pix, 8 min.">
+                <tr>
+                    <th width="158">Tracking Errors</th>
+                </tr>
+                <tr>
+                    <td width="158" height="34" valign="center" class="trackGraph" id="sm_trkGraphX"></td> <!-- 34px in sparkline call below -->
+                </tr>
+                <tr>
+                    <td width="158" height="34" valign="center" class="trackGraph" id="sm_trkGraphY"></td>
+                </tr>
+                <tr>
+                    <td width="158" height="48" valign="center" class="trackGraph"><div align="center" id="sm_trkGraphXY"></div></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<!-- Console Input Form LightBoxes -->
+<div class="lightBoxAlert" id="sm_yesNoLightBox" style="display:none">
+    <div class="lightBoxAlertIcon"><img id="lightBoxAlertIcon" src="/im/question.png" alt="?" title="Input Requested"></div>
+    <div style="margin-left:56px;margin-top:4px;">
+    <form style="margin:0px;" id="sm_yesNoForm" method="post" action="/ac/aconsread.asp">
+        <span id="sm_yesNoPrompt"></span>&nbsp;&nbsp;(click one)<br>
+        <input type="radio" name="YesNo" value="y" checked>Yes&nbsp;
+        <input type="radio" name="YesNo" value="n">No<br>
+        <input type="hidden" name="answer_yn">
+    </form>
+    <input type="button" id="sm_yesNoAnsButton" value="Answer">
+    </div>
+</div>
+<div class="lightBoxAlert" id="sm_readLineLightBox" style="display:none">
+    <div class="lightBoxAlertIcon"><img id="lightBoxAlertIcon" src="/im/question.png" alt="?" title="Input Requested"></div>
+    <div style="margin-left:56px;margin-top:4px;">
+    <form style="margin:0px;" id="sm_readLineForm" method="post" action="/ac/aconsread.asp">
+        <span id="sm_readLinePrompt"></span><br>
+        <input type="text" id="sm_readLineText" name="response" size="30"><br>
+        <input type="hidden" id="sm_readLineButtonData" name="??">
+    </form>
+    <input type="button" id="sm_readLineOKButton" value="OK">
+    <span id="sm_readLineCancelSpan" style="display:none">&nbsp;&nbsp;
+        <input type="button" id="sm_readLineCancelButton" value="Cancel">
+    </span>
+    </div>
+</div>
+<!-- End of HTML -->
+</html><<slider "SysMonConsole" "SysMonConsoleSlider" "Show/Hide Run Log and Abort Control" "Shows a live running log of activity">><script>
+    // JSON workers (see asystemstatus.asp)
+    function _s(id, escVal) {                               // Fill in element
+        // Note that jQuery notation not used here (e.g. $('#' + id);) as
+        // it really slows the startup (and refresh) of the displays.
+        var elem = document.getElementById(id);
+        var val = unescape(escVal);
+        var span = elem.firstChild;                         // Inner <span> has appearance
+        if(span && val.substr(0, 1) == '@') {               // Possible appearance code
+            switch(val.substr(1, 2)) {
+                case 'an':
+                    span.className = "telemActive";
+                    span.setAttribute("flash", "off");
+                    val = val.substr(3);
+                    break;
+                case 'af':
+                    span.className = "telemActive";
+                    span.setAttribute("flash", "on");
+                    val = val.substr(3);
+                    break;
+                case 'wn':
+                    span.className = "telemWarn";
+                    span.setAttribute("flash", "off");
+                    val = val.substr(3);
+                    break;
+                case 'wf':
+                    span.className = "telemWarn";
+                    span.setAttribute("flash", "on");
+                    val = val.substr(3);
+                    break;
+                case 'in':
+                case 'if':
+                    span.className = "telemOff";
+                    span.setAttribute("flash", "off");
+                    val = val.substr(3);
+                    break;
+                default:                                    // Pass anytning else on
+                    break;
+            }
+            span.innerHTML = val;                           // Content goes in span
+        }
+        else
+            elem.innerHTML = val;                           // Element gets content
+    }
+    // This is in a slider sub-tiddler, but still accessible!
+    function _c(escVal) {                                   // Same here, for textarea
+        try {                                               // May not exist (slider hidden)
+            var ta = document.getElementById('sm_console');
+            var lData = unescape(escVal);
+            ta.value = lData.substr(2);                     // Display all after auto-scroll indicator
+            if(lData.substr(0, 2) == "@s")                  // If obs is busy
+                ta.scrollTop = ta.scrollHeight - ta.clientHeight; // Auto-scroll to bottom
+        } catch(ex) { }
+    }
+    function _p(id, val) {                                  // Prog-bar fractional length
+        var barElem = document.getElementById(id);
+        var tw = barElem.parentNode.offsetWidth;
+        barElem.style.width = parseInt(val * tw) + "px";
+    }
+    function _v(id, val) {                                  // Set visibility
+        var elem = document.getElementById(id);
+        elem.style.display = (val ? "" : "none");
+    }
+    function _l(escVal) {                                   // Show simple LightBox
+        DC3.LightBox.showContent(unescape(escVal));
+    }
+    function _a(icon, escVal) {                             // Show LightBox Alert
+        DC3.LightBox.showAlert(icon, unescape(escVal));
+    }
+    function _aw(icon, escVal) {                            // Show LightBox Web Console Alert
+        DC3.LightBox.showAlert(icon, unescape(escVal), _consPostAlertOk);   // Close sends POST back to aconsread.asp
+    }
+    function _lh() {                                        // Make any current LightBox disappear
+        DC3.LightBox.hideBox();
+    }
+    function _y(escPrompt) {                                // Show Console Yes/No LightBox
+        document.getElementById("sm_yesNoPrompt").innerHTML = unescape(escPrompt);
+        document.getElementById("sm_yesNoAnsButton").onclick = _consPostYesNoForm;
+        DC3.LightBox.showBox("sm_yesNoLightBox");
+    }
+    function _r(escPrompt, cancel) {                        // Show Console Read Line LightBox
+        document.getElementById("sm_readLineOKButton").onclick = _consPostReadLineFormOk;
+        if(cancel) {
+            document.getElementById("sm_readLineCancelSpan").style.display = '';
+            document.getElementById("sm_readLineCancelButton").onclick = _consPostReadLineFormCancel;
+        } else {
+            document.getElementById("sm_readLineCancelSpan").style.display = 'none';
+            document.getElementById("sm_readLineCancelButton").onclick = null;
+        }
+        document.getElementById("sm_readLinePrompt").innerHTML = unescape(escPrompt);
+        if(!DC3.LightBox.showing()) document.getElementById("sm_readLineText").value = "";
+        DC3.LightBox.showBox("sm_readLineLightBox");
+    }
+    // Flasher function
+    function _smFlasher() {
+        DC3.Lib.sysMonFlashTimerID = null;                  // Timer has expired
+        var outer = document.getElementById("sm_sysMon");
+        if(!outer)                                          // Tiddler closed or editing
+            return;                                         // Exit now with no timer set
+        var spans = outer.getElementsByTagName("span");
+        for(var i = 0; i < spans.length; i++) {
+            var span = spans[i];
+            if(span.attributes['flash'] && span.attributes['flash'].value == 'on') {
+                if(span.attributes['onClass'] && span.attributes['onClass'].value !== "") {
+                    span.className = span.attributes['onClass'].value;
+                    span.attributes['onClass'].value = "";
+                } else {
+                    span.setAttribute('onClass', span.className);
+                    span.className = "telemOff";
+                }
+            }
+        }
+        if(DC3.Lib.sysMonFlashTimerID === null)             // Unless already active timer (????)
+            DC3.Lib.sysMonFlashTimerID = setTimeout(_smFlasher, 200);
+    }
+    // Dome/shutter control AJAX interface (variable labels and cmd links)
+    function _shutterCtlOnComplete(text, params) {
+        displayMessage(text);
+        _sendRequest(false);                                // Force immediate update (typ.)
+    }
+    function _shutterCtl(e) {
+        if(!e) e = window.event;
+        var tgt = resolveTarget(e);
+        var tiptxt = tgt.getAttribute("title");
+        if(!config.browser.isTouchInterface || confirm(tiptxt))
+        {
+            var op = resolveTarget(e).getAttribute("op");       // Link has op="xx"? (typ.)
+            var qs = op ? "?" + op : "";                        // Include as query string (typ.)
+            DC3.Ajax.sendRequest("GET", "/ac/ashutterctl.asp" + qs, "", _shutterCtlOnComplete, null);
+        }
+    }
+    function _domeCtlOnComplete(text, params) {
+        displayMessage(text);
+        _sendRequest(false);
+    }
+    function _domeCtl(e) {
+        if(!e) e = window.event;
+        var op = resolveTarget(e).getAttribute("op");
+        var tgt = resolveTarget(e);
+        var tiptxt = tgt.getAttribute("title");
+        if(!config.browser.isTouchInterface || confirm(tiptxt))
+        {
+            var qs = op ? "?" + op : "";
+            DC3.Ajax.sendRequest("GET", "/ac/adomectl.asp" + qs, "", _domeCtlOnComplete, null);
+        }
+    }
+    // Scope conn.disc AJAX interface
+    function _scopeCtlOnComplete(text, params) {
+        DC3.LightBox.hideBox();                             // Harmless if park-box wasn't shown
+        displayMessage(text);
+        _sendRequest(false);
+    }
+    function _scopeCtlDiscPark(e) {
+        var qs, ms;
+        if(document.getElementById("sm_yesNoForm").elements[0].checked) {
+            ms = "Parking and disconnecting";
+            qs = "discpark";
+        } else {
+            ms = "Disconnecting";
+            qs = "disc";
+        }
+        displayMessage( ms + " the scope...");
+        DC3.Ajax.sendRequest("GET", "/ac/ascopeconn.asp?" + qs, "", _scopeCtlOnComplete, null);
+    }
+    function _scopeCtl(e) {
+        if(!e) e = window.event;
+        var tgt = resolveTarget(e);
+        var tiptxt = tgt.getAttribute("title");
+        if(!config.browser.isTouchInterface || confirm(tiptxt))
+        {
+            var op = resolveTarget(e).getAttribute("op");
+            var qs = op ? "?" + op : "";
+            if(op == "conn") {
+                displayMessage("Connecting scope, please wait...");
+                DC3.Ajax.sendRequest("GET", "/ac/ascopeconn.asp" + qs, "", _scopeCtlOnComplete, null);
+            } else {
+                // Can't use embedded ASP to check CanPark here
+                document.getElementById("sm_yesNoPrompt").innerHTML = "Park the telescope?";
+                document.getElementById("sm_yesNoAnsButton").onclick = _scopeCtlDiscPark;
+                DC3.LightBox.showBox("sm_yesNoLightBox", null); // Do nothing if box is closed
+            }
+        }
+    }
+    // Camera conn.disc AJAX interface
+    function _camCtlOnComplete(text, params) {
+        displayMessage(text);
+        _sendRequest(false);
+    }
+    function _camCtl(e) {
+        if(!e) e = window.event;
+        var tgt = resolveTarget(e);
+        var tiptxt = tgt.getAttribute("title");
+        if(!config.browser.isTouchInterface || confirm(tiptxt))
+        {
+            var op = resolveTarget(e).getAttribute("op");
+            var qs = op ? "?" + op : "";
+            // Checking row visibility for cameras with no temp control
+            if(op == "disc" && (document.getElementById("sm_imgTempRow").style.display != "none") &&
+                    (document.getElementById("sm_imgTemp").firstChild.innerHTML.search(/Off/) == -1)) {
+                DC3.LightBox.showAlert("warning", "Warm and turn off the cooler first.");
+            } else {
+                DC3.Ajax.sendRequest("GET", "/ac/acamconn.asp" + qs, "", _camCtlOnComplete, null);
+            }
+        }
+    }
+    // Cooler control AJAX interface
+    function _tempCtlOnComplete(text, params) {
+        displayMessage(text);
+        _sendRequest(false);
+    }
+    function _tempCtl(e) {
+        if(!e) e = window.event;
+        var tgt = resolveTarget(e);
+        var tiptxt = tgt.getAttribute("title");
+        if(!config.browser.isTouchInterface || confirm(tiptxt))
+        {
+            var op = resolveTarget(e).getAttribute("op");
+            var qs;
+            if(op == "temp") {
+                qs = prompt("New cooler temperature or \"off\":", "");
+                if(qs === "") return;                           // Cancelled
+                qs = "?" + escape(qs);
+            } else {
+                qs = "?" + op;                                  // For now only "on"
+            }
+            DC3.Ajax.sendRequest("GET", "/ac/atempctrl.asp" + qs, "", _tempCtlOnComplete, null);
+        }
+    }
+    // Weather conn.disc AJAX interface
+    function _wxCtlOnComplete(text, params) {
+        displayMessage(text);
+        _sendRequest(false);
+    }
+    function _wxCtl(e) {
+        if(!e) e = window.event;
+        var tgt = resolveTarget(e);
+        var tiptxt = tgt.getAttribute("title");
+        if(!config.browser.isTouchInterface || confirm(tiptxt))
+        {
+            var op = resolveTarget(e).getAttribute("op");
+            var qs = op ? "?" + op : "";
+            DC3.Ajax.sendRequest("GET", "/ac/awxconn.asp" + qs, "", _wxCtlOnComplete, null);
+        }
+    }
+    // Console I/O AJAX interface
+    function _consPostFormOnComplete(text, params) {
+        var t = text.trim();
+        if(t === "")
+            displayMessage(t);
+        else
+            displayMessage("Message sent.");
+        DC3.LightBox.hideBox();
+    }
+    function _consPostYesNoForm(e) {
+        var form = document.getElementById("sm_yesNoForm");
+        DC3.Ajax.postForm(form, form.action, _consPostFormOnComplete, null);
+    }
+    function _consPostReadLineFormOk(e) {
+        var form = document.getElementById("sm_readLineForm");
+        document.getElementById("sm_readLineButtonData").name = "answer_rd_ok";
+        DC3.Ajax.postForm(form, form.action, _consPostFormOnComplete, null);
+    }
+    function _consPostReadLineFormCancel(e) {
+        var form = document.getElementById("sm_readLineForm");
+        document.getElementById("sm_readLineButtonData").name = "answer_rd_can";
+        DC3.Ajax.postForm(form, form.action, _consPostFormOnComplete, null);
+    }
+    function _consPostAlertOk() {                           // Not event, set as lightbox callback
+        DC3.Ajax.sendRequest("POST", "/ac/aconsread.asp", "", _consPostFormOnComplete, null);
+        return true;                                        // Go ahead and close lightbox
+    }
+    // AJAX interface (Depends on global DC3.Lib.sysMonTimerID)
+    function _smOnComplete(json, params) {
+        try {                                               // Dies if closed or editing
+            eval(json);                                     // (also toss any other JSON errors)
+            var clr = $('span.telemActive').css('color');   // Graph lines same color as active telemetry text
+            //
+            // Insert jQuery sparkline objects into place http://omnipotent.net/jquery.sparkline/
+            // NOTES: Width is 158 pixels, defaultPixelsPerValue = 2 (scale of X axis) so there
+            //        should be 79 values in the lists. This is set in asystemstatus as the
+            //        constant MAXTRKPTS = 79. At 6 sec per point, this is 7.9 minutes, eh?
+            //
+            $('#sm_trkGraphX').sparkline('html',
+            {
+                type:'line',
+                lineWidth:'2',
+                spotRadius:'2',
+                minSpotColor:false,
+                maxSpotColor:false,
+                lineColor:clr,
+                fillColor:false,
+                height:'34px',
+                chartRangeMin:'-2',
+                chartRangeMax:'2',
+                chartRangeClip:true,
+                defaultPixelsPerValue:2
+            });
+            $('#sm_trkGraphY').sparkline('html',
+            {
+                type:'line',
+                lineWidth:'2',
+                spotRadius:'2',
+                minSpotColor:false,
+                maxSpotColor:false,
+                lineColor:clr,
+                fillColor:false,
+                height:'34px',
+                chartRangeMin:'-2',
+                chartRangeMax:'2',
+                chartRangeClip:true,
+                defaultPixelsPerValue:2
+            });
+            $('#sm_trkGraphXY').sparkline('html',
+            {
+                type:'line',
+                lineWidth:'1',
+                spotRadius:'2',
+                minSpotColor:false,
+                maxSpotColor:false,
+                lineColor:clr,
+                fillColor:false,
+                height:'48px',
+                width:'48px',
+                chartRangeMin:'-2',
+                chartRangeMax:'2',
+                chartRangeMinX:'0',
+                chartRangeMaxX:'4'
+            });
+        } catch(ex) { }
+
+        // Update dynamic links' event hookups (should use jQuery!!)
+        var elem = document.getElementById("sm_logOff");    // May not exist (typ.)
+        if(elem) elem.onclick = DC3.Lib.logOff;             // Logoff in library now
+        elem = document.getElementById("sm_shutterCtlLink");
+        if(elem) elem.onclick = _shutterCtl;
+        elem = document.getElementById("sm_domeCtlLink");
+        if(elem) elem.onclick = _domeCtl;
+        elem = document.getElementById("sm_scopeConnLink");
+        if(elem) elem.onclick = _scopeCtl;
+        elem = document.getElementById("sm_camConnLink");
+        if(elem) elem.onclick = _camCtl;
+        elem = document.getElementById("sm_camTempLink");
+        if(elem) elem.onclick = _tempCtl;
+        elem = document.getElementById("sm_wxCtlLink");
+        if(elem) elem.onclick = _wxCtl;
+
+        if(DC3.Lib.sysMonRefreshTimerID === null)           // Unless already active timer (????)
+            DC3.Lib.sysMonRefreshTimerID = setTimeout(_sendRequest, 5000);
+    }
+    function _sendRequest(init) {                           // True if this is initial call opening tiddler
+        if(DC3.Lib.sysMonRefreshTimerID)                    // Allow pre-emptive refresh call
+            clearTimeout(DC3.Lib.sysMonRefreshTimerID);     // ...for immediate refresh
+        DC3.Lib.sysMonRefreshTimerID = null;                // Timer's done now
+        if(document.getElementById("sm_scopeStat")) {       // Gone if editing or closed
+            // init will be an event or null if called back from timer
+            // look for explicit bool true to detect call for init
+            var complParams = { };
+            DC3.Ajax.sendRequest("GET", "/ac/asystemstatus.asp" +
+                                    ((typeof init == "boolean" && init) ? "?init" : ""),
+                                    "", _smOnComplete, complParams);
+        }
+    }
+    // Initial call on opening the tiddler
+    // Dynamic links - repeated in _sm_onComplete()
+    var elem = document.getElementById("sm_logOff");        // May not exist (typ.)
+    if(elem) elem.onclick = DC3.Lib.logOff;                 // Logoff in library now
+    elem = document.getElementById("sm_shutterCtlLink");
+    if(elem) elem.onclick = _shutterCtl;
+    elem = document.getElementById("sm_domeCtlLink");
+    if(elem) elem.onclick = _domeCtl;
+    elem = document.getElementById("sm_scopeConnLink");
+    if(elem) elem.onclick = _scopeCtl;
+    elem = document.getElementById("sm_camConnLink");
+    if(elem) elem.onclick = _camCtl;
+    elem = document.getElementById("sm_camTempLink");
+    if(elem) elem.onclick = _tempCtl;
+    elem = document.getElementById("sm_wxCtlLink");
+    if(elem) elem.onclick = _wxCtl;
+
+    elem = document.getElementById("sm_HoverLabel");
+    if(config.browser.isTouchInterface)
+        elem.innerHTML = "Touch the links to see what they do and be asked if you want to do it</i>";
+    else
+        elem.innerHTML = "Hover the mouse over the links to see what they do";
+
+    if(DC3.Lib.sysMonRefreshTimerID === null) _sendRequest(true);   // Don't start multiple timer cycles!
+    if(DC3.Lib.sysMonFlashTimerID === null) _smFlasher();
+</script>

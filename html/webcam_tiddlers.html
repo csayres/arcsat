@@ -1,0 +1,81 @@
+<!--
+Add the links to the webcam in the Observatory info tag.  From authoring click main menu then edit.  Add the Telescope/Dome Webcam divs shown below
+
+In bottom entry line add Custom
+-->
+
+   <div class="mainDiv">
+        <div class="topItem" >Observatory Info</div>
+        <div class="dropMenu" >
+            <div class="subMenu" style="display:none;">
+                <div class="subItem"><a href="javascript:;" title="Status and control center" onClick="story.displayTiddler(this,'System Status',null,config.options.chkAnimate,false)">System Status Disp.</a></div>
+                <div class="subItem"><a href="javascript:;" title="Detailed weather information" onClick="story.displayTiddler(this,'Weather',null,config.options.chkAnimate,false)">Weather</a></div>
+                <div class="subItem"><a href="javascript:;" title="Detailed specs on our instruments and equipment" onClick="story.displayTiddler(this,'Instruments & Equipment',null,config.options.chkAnimate,false)">Instruments &amp; Equipment</a></div>
+                <div class="subItem"><a href="javascript:;" title="Geographic location and elevation" onClick="story.displayTiddler(this,'Location',null,config.options.chkAnimate,false)">Location</a></div>
+                <div class="subItem"><a href="javascript:;" title="Upcoming dawn and dusk times of various types" onClick="story.displayTiddler(this,'Dawn-Dusk Times',null,config.options.chkAnimate,false)">Dawn-Dusk Times</a></div>
+                <div class="subItem"><a href="javascript:;" title="How to contact the observatory staff" onClick="story.displayTiddler(this,'Contact Info',null,config.options.chkAnimate,false)">Contact Info</a></div>
+                <div class="subItem"><a href="javascript:;" title="Feed your newsreader with observatory events" onClick="story.displayTiddler(this,'RSS Feed',null,config.options.chkAnimate,false)"><img src="/im/feed-icon-14x14.png" border="0" width="14" height="14" align="absmiddle">&nbsp;RSS Events Feed</a></div>
+                <div class="subItem"><a href="javascript:;" title="Dome Webcam" onClick="story.displayTiddler(this,'DomeWebcamViewer',null,config.options.chkAnimate,false)">Dome Webcam</a></div>
+                <div class="subItem"><a href="javascript:;" title="Telescope Webcam" onClick="story.displayTiddler(this,'TelescopeWebcamViewer',null,config.options.chkAnimate,false)">Telescope Webcam</a></div>
+            </div>
+        </div>
+    </div>
+
+
+<!--
+Add the tiddlers below by (from within authoring on ACP webpage) click new tiddler.
+The names (top entry field) must match the names in the displayTiddler method (TelescopeWebcamViewer or DomeWebcamViewer).
+
+In the bottom field write Custom
+-->
+
+<html>
+<img id="dome_cam" border="0" src="/webcam/dome.jpg">
+
+<button id="dome_clicky" type="button">Refresh</button>
+
+</html>
+
+<script>
+function dome_reload(){
+        var image = document.getElementById("dome_cam")
+        var new_image = new Image()
+        //set up the new image
+        new_image.id = "dome_cam"
+        new_image.src = "/webcam/dome.jpg"
+        // insert new image and remove old
+        image.parentNode.insertBefore(new_image,image)
+        image.parentNode.removeChild(image)
+
+        }
+document.getElementById("dome_clicky").onclick = dome_reload
+</script>
+
+
+<html>
+<img id="tele_cam" border="0" src="/webcam/tele.jpg">
+
+<button id="tele_clicky" type="button">Refresh</button>
+
+</html>
+
+<script>
+function tele_reload(){
+        var image = document.getElementById("tele_cam");
+        var new_image = new Image();
+        //set up the new image
+        new_image.id = "tele_cam";
+        new_image.src = "/webcam/tele.jpg";
+        // insert new image and remove old
+        image.parentNode.insertBefore(new_image,image);
+        image.parentNode.removeChild(image);
+
+        }
+        document.getElementById("tele_clicky").onclick = tele_reload
+</script>
+
+
+
+
+
+

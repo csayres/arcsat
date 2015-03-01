@@ -1,0 +1,49 @@
+VNC display tunnel instructions:
+
+In terminal:  ssh -L 5901:arcsat-tcs:5900 [user]@newton.apo.nmsu.edu
+
+Then in your vnc program use display port 1 and logon to localhost with
+the typical apo password.
+
+
+EDIT via web interface:
+
+-Add a link to the sidebar:
+
+click authoring (bottom left)
+expand right hand menu
+find main menu on right hand menu and click
+click edit
+
+eg I entered this (see bottom webcam, thats added!):
+
+   <div class="mainDiv">
+        <div class="topItem" >Observatory Info</div>
+        <div class="dropMenu" >
+            <div class="subMenu" style="display:none;">
+                <div class="subItem"><a href="javascript:;" title="Status and control center" onClick="story.displayTiddler(this,'System Status',null,config.options.chkAnimate,false)">System Status Disp.</a></div>
+                <div class="subItem"><a href="javascript:;" title="Detailed weather information" onClick="story.displayTiddler(this,'Weather',null,config.options.chkAnimate,false)">Weather</a></div>
+                <div class="subItem"><a href="javascript:;" title="Detailed specs on our instruments and equipment" onClick="story.displayTiddler(this,'Instruments & Equipment',null,config.options.chkAnimate,false)">Instruments &amp; Equipment</a></div>
+                <div class="subItem"><a href="javascript:;" title="Geographic location and elevation" onClick="story.displayTiddler(this,'Location',null,config.options.chkAnimate,false)">Location</a></div>
+                <div class="subItem"><a href="javascript:;" title="Upcoming dawn and dusk times of various types" onClick="story.displayTiddler(this,'Dawn-Dusk Times',null,config.options.chkAnimate,false)">Dawn-Dusk Times</a></div>
+                <div class="subItem"><a href="javascript:;" title="How to contact the observatory staff" onClick="story.displayTiddler(this,'Contact Info',null,config.options.chkAnimate,false)">Contact Info</a></div>
+                <div class="subItem"><a href="javascript:;" title="Feed your newsreader with observatory events" onClick="story.displayTiddler(this,'RSS Feed',null,config.options.chkAnimate,false)"><img src="/im/feed-icon-14x14.png" border="0" width="14" height="14" align="absmiddle">&nbsp;RSS Events Feed</a></div>
+                <div class="subItem"><a href="javascript:;" title="Dome Webcam" onClick="story.displayTiddler(this,'DomeWebcamViewer',null,config.options.chkAnimate,false)">Dome Webcam</a></div>
+                <div class="subItem"><a href="javascript:;" title="Telescope Webcam" onClick="story.displayTiddler(this,'TelescopeWebcamViewer',null,config.options.chkAnimate,false)">Telescope Webcam</a></div>
+            </div>
+        </div>
+    </div>
+
+bottom line should say systemContent custom (custom may already be there if you have done this already)
+
+next make the tiddler (the widget)
+
+Add the tiddlers below by (from within authoring on ACP webpage) click new tiddler.
+The names (top entry field) must match the names in the displayTiddler method (TelescopeWebcamViewer or DomeWebcamViewer).
+
+In the bottom field write Custom
+
+focus max docs:
+
+http://www.focusmax.org/Downloads/FocusMax%20Help.pdf
+

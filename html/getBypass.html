@@ -1,0 +1,50 @@
+--------------Link on Main Menu under Observatory Info-----------------
+    <div class="subItem"><a href="javascript:;" title="Bypass Status" onClick="story.displayTiddler(this,'BypassStatus',null,config.options.chkAnimate,false)">Bypass Status</a></div>
+
+----------------------- tiddler code (copy paste via autoring in tiddler) -----------------------
+
+<html>
+<div><h2> Bypass is:  <span id="bypass"> </span> </h2></div>
+<div><h2> Master Telescope:  <span id="tel"> </span> </h2></div>
+<div><h4> <span id="moreInfo"> </span></h4></div>
+<br>
+</html>
+
+<script>
+var bypassTimer = null;
+function bypassCallback(json){
+    var splitLine = json.split(",");
+    var bypass = splitLine[0];
+    var tel = splitLine[1]+"m";
+    var bypassOnTxt = "Careful! Dome is NOT Slaved to another telescope."
+    var bypassOffTxt = "Rest Assured: Your dome is slaved."
+    console.log(bypass);
+    if (bypass.search("no")>0){
+        $("#bypass").html("INACTIVE");
+        $("#bypass").attr("style", "color:green");
+        $("#moreInfo").html(bypassOffTxt);
+    }
+    else {
+        $("#bypass").html("ACTIVE");
+        $("#bypass").attr("style", "color:yellow");
+        $("#moreInfo").html(bypassOnTxt);
+    }
+    $("#tel").html(tel);
+    if(bypassTimer == null){           // Unless already active timer (????)
+        bypassTimer = setTimeout(pollBypass, 2000);
+    }
+}
+
+function pollBypass(init){
+    if(bypassTimer){                    // Allow pre-emptive refresh call
+        clearTimeout(bypassTimer);     // ...for immediate refresh
+    }
+    bypassTimer = null;
+    DC3.Ajax.sendRequest("GET", "/ac/getBypass.asp",
+                            "", bypassCallback, null);
+}
+
+pollBypass();
+
+
+</script>
