@@ -60,16 +60,17 @@ document.getElementById("dome_clicky").onclick = dome_reload
 </html>
 
 <script>
+var versNum = 0
 function tele_reload(){
         var image = document.getElementById("tele_cam");
         var new_image = new Image();
         //set up the new image
         new_image.id = "tele_cam";
-        new_image.src = "/webcam/tele.jpg";
+        new_image.src = "/webcam/tele.jpg"+"?"+versNum;
         // insert new image and remove old
         image.parentNode.insertBefore(new_image,image);
         image.parentNode.removeChild(image);
-
+        versNum++
         }
         document.getElementById("tele_clicky").onclick = tele_reload
 </script>
