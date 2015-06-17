@@ -2,6 +2,7 @@ import os.path
 import urllib
 import time
 import shutil
+import traceback
 
 refreshPeriod = 10. # seconds
 baseDir = "C:\Users\Public\Documents\ACP Web Data\Doc Root\webcam"
@@ -14,9 +15,16 @@ notFoundDest = os.path.join(baseDir, "notFound.jpg")
 while True:
         try:
                 urllib.urlretrieve(teleURL, teleDest)
-        except:
+                print "webcam image retrevial success"
+        except Exception, e1:
                 ## image not found
-                shutil.copy(notFoundDest, teleDest)
+                print "webcam retrevial failed, copying not-found-image to telescope image"
+                print(traceback.format_exc())
+                try:
+                    shutil.copy(notFoundDest, teleDest)
+                except Exception, e2:
+                    print "failed to copy not-found-image to telescope image"
+                    print(traceback.format_exc())
         #try:
          #      urllib.urlretrieve(domeURL, domeDest)
         #except:
